@@ -1,5 +1,8 @@
+// 2 Linked list give, add them
+
 #include <iostream>
 using namespace std;
+int count = 0;
 
 class Node
 {
@@ -28,35 +31,41 @@ Node *insert(Node *head, int val)
     curr ->next = nptr;
     return head;
 }
-// Add 2 linkedlist
-Node *newlist(Node *head, Node *head2)
-{
-    Node *nlist = NULL;
-    Node *temp = nlist;
-    int c = 0;
-    while(head!= NULL || head2 != NULL || c)
-    {
-        int sum = 0;
-        if(head!= NULL)
-        {
-            sum += head->data;
-            head = head->next;
-        }
-        if(head2!= NULL)
-        {
-            sum += head2->data;
-            head2 = head2->next;
-        }
-        sum += c;
-        int rem = sum % 10;
-        Node *nptr = new Node(sum /10);
-        temp->next = nptr;
-        temp = temp->next;
-        
-    }
-    return nlist;
-}
 
+Node *merge(Node *head1, Node *head2)
+{
+    Node *c1 = head1, *c2 = head2;
+    Node *newlist = new Node(-1);
+    Node *trav = newlist;
+    
+    while(c1!= NULL and c2!= NULL)
+    {
+        if(c1->data < c2->data)
+        {
+            trav->next = c1;
+            c1 = c1->next;
+        }
+        else
+        {
+            trav->next = c2;
+            c2 = c2->next;
+        }
+        trav = trav->next;
+    }
+    while(c1!= NULL)
+    {
+        trav->next = c1;
+        c1 = c1->next;
+        trav = trav->next;
+    }
+    while(c2!= NULL)
+    {
+        trav->next = c2;
+        c2 = c2->next;
+        trav = trav->next;
+    }
+    return newlist->next;
+}
 void display(Node *head)
 {
     while(head)
@@ -65,19 +74,22 @@ void display(Node *head)
         head = head->next;
     }
 }
+
 int main()
 {
     Node *head = NULL;
     int n;
     cin >> n;
+    int m;
+    cin >> m;
     for(int i=0;i<n;i++)
     {
         int val;
         cin>>val;
         head = insert(head , val);
     }
-    int m;
-    cin >> m;
+    display(head);
+
     Node *head2 = NULL;
     for(int i=0;i<m;i++)
     {
@@ -85,12 +97,10 @@ int main()
         cin>>val;
         head2 = insert(head2 , val);
     }
-    Node *nptr = newlist(head , head2);
-    Node *temp = nptr;
-    while(temp)
-    {
-        cout << temp->data << " ";
-        temp = temp->next;
-    }
+    cout << endl;
+    display(head2);
+    cout << endl;
+    Node *newnode = merge(head, head2);
+    display(newnode);
     return 0;
 }
