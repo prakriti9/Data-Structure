@@ -192,8 +192,7 @@ void displayIn(Node* head)
         }
         else
         {
-            if(s.empty())
-                break;
+            if(s.empty())   break;
             temp = s.top();
             cout << temp->data << ", ";
             s.pop();
@@ -276,19 +275,20 @@ int main()
     head = insert(head, 90);
     head = insert(head, 100);
     head = insert(head, 12);
+    
     displayIn(head);
     // head = del(head, 50);
-    cout << endl;
-    displayPre(head);
-    cout << endl << endl;
-    levelorder(head);
-    cout << endl;
+    // cout << endl;
+    // displayPre(head);
+    // cout << endl << endl;
+    // levelorder(head);
+    // cout << endl;
 
-    Node *head1 = NULL;
-    head1 = insertlevel();
+    // Node *head1 = NULL;
+    // head1 = insertlevel();
     
-    // levelorder(head1);
-    cout << height(head) << endl;
-    cout << diameter(head) << " ";
+    // // levelorder(head1);
+    // cout << height(head) << endl;
+    // cout << diameter(head) << " ";
     return 0;
 }

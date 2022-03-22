@@ -1,6 +1,5 @@
-#include <iostream>
-#include <stack>
-#include <map>
+#include <bits/stdc++.h>
+
 using namespace std;
 
 class Node
@@ -36,6 +35,108 @@ Node *insert(Node *root, int val)
     }
     
     return root;
+}
+// Node* del (Node *root, int val)
+// {
+//     if(root == NULL)
+//         return root;
+    
+//     if(root->data > val)
+//     {
+//         root->prev = del(root->prev, val);
+//     }
+//     else if(root->data < val)
+//     {
+//         root->next = del(root->next, val);
+//     }
+//     else
+//     {
+//         if(root->prev == NULL and root->next == NULL)
+//         {
+//             Node *temp = root;
+//             delete temp;
+//             root = NULL;
+//         }
+//         else if(root->prev == NULL)
+//         {
+//             Node *temp = root;
+//             root = root->next;
+//             delete temp;
+//         }
+//         else if(root->next == NULL)
+//         {
+//             Node *temp = root;
+//             root = root->prev;
+//             delete temp;
+//         }
+//         else
+//         {
+//             Node *temp = root->next;
+//             while(temp->prev != NULL)
+//             {
+//                 temp = temp->prev;
+//             }
+//             root->data = temp->data;
+//             root ->next = del(root->next, temp->data);
+//         }
+//     }
+//     return root;
+// }
+
+Node *del(Node *root, int val)
+{
+    if(root == NULL)
+        return root;
+    if(root-> data > val)
+    {
+        root->prev = del(root ->prev, val);
+    }
+    else if(root-> data < val)
+    {
+        root -> next = del(root->next, val);
+    }
+    else
+    {
+        if(root->prev == NULL and root ->next == NULL)
+        {
+            Node *temp = root;
+            delete root;
+            root = NULL;
+        }
+        else if(root->prev == NULL)
+        {
+            Node *temp = root;
+            root = root->next;
+            delete temp;
+        }
+        else if(root->next == NULL)
+        {
+            Node *temp = root;
+            root = root->prev;
+            delete temp;
+        }
+        else
+        {
+            Node *temp = root->next;
+            while(temp->prev != NULL)
+            {
+                temp = temp->prev;
+            }
+            root ->data = temp->data;
+            root ->next = del(root -> next, temp->data);
+        }
+    }
+    return root;
+}
+
+int height(Node *root)
+{
+    // int max = 0;
+    if(root == NULL)
+        return 0;
+    
+    return (1 + max(height(root->prev), height(root->next)));
+
 }
 void display(Node *root)
 
@@ -94,6 +195,7 @@ void displaynotrecurrPre(Node *root)
         }      
     }
 }
+
 void displaynotrecurrPost(Node *root)
 {
     if (root == NULL) 
@@ -133,8 +235,10 @@ int main()
     }
     display(root);
     cout << endl;
-    displaynotrecurrPre(root);
+    root = del(root, 40);
     cout << endl;
-    displaynotrecurrPost(root);
+    display(root);
+    cout << endl;
+    cout << height(root);
     return 0;
 }

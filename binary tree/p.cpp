@@ -49,27 +49,52 @@ Node *insert(Node *head, int val)
     return head;
 }
 
+void inorder(Node *head)
+{
+    stack <Node*> s;
+    Node *temp = head;
+    while(true)
+    {
+        if(temp!= NULL)
+        {
+            s.push(temp);
+            temp = temp->left;
+        }
+        else
+        {
+            if(s.empty())   break;
+            
+            temp = s.top();
+            cout << temp->data << ".... ";
+            s.pop();
+            temp = temp->right;
+        }
+    }
+}
+
 Node *getsucess(Node *curr)
 {
+    // Node *c = curr->right;
     curr = curr->right;
-    while(curr != NULL and curr->left != NULL)
+    while(curr!= NULL and curr->left != NULL)
     {
         curr = curr->left;
     }
     return curr;
 }
+
 Node *del(Node *head, int val)
 {
     if(head == NULL)
         return head;
 
-    if(head->data > val)
+    if(head ->data > val)
     {
-        head ->left = del(head->left, val);
+        head -> left = del(head->left, val);
     }
     else if(head->data < val)
     {
-        head ->right = del(head->right, val);
+        head->right = del(head->right, val);
     }
     else
     {
@@ -79,7 +104,7 @@ Node *del(Node *head, int val)
             delete temp;
             head = NULL;
         }
-        else if(head->left == NULL)
+        else if(head->left ==  NULL)
         {
             Node *temp = head->right;
             delete head;
@@ -93,39 +118,90 @@ Node *del(Node *head, int val)
         }
         else
         {
-            Node *curr = getsucess(head);
+            Node* curr = getsucess(head);
             head->data = curr->data;
             head->right = del(head->right, val);
         }
     }
     return head;
 }
-void displayPre(Node *head)
-{
-    if(head == NULL)
-        return;
+// Node *getsucess(Node *curr)
+// {
+//     curr = curr->right;
+//     while(curr != NULL and curr->left != NULL)
+//     {
+//         curr = curr->left;
+//     }
+//     return curr;
+// }
+// Node *del(Node *head, int val)
+// {
+//     if(head == NULL)
+//         return head;
+
+//     if(head->data > val)
+//     {
+//         head ->left = del(head->left, val);
+//     }
+//     else if(head->data < val)
+//     {
+//         head ->right = del(head->right, val);
+//     }
+//     else
+//     {
+//         if(head->left == NULL and head->right == NULL)
+//         {
+//             Node *temp = head;
+//             delete temp;
+//             head = NULL;
+//         }
+//         else if(head->left == NULL)
+//         {
+//             Node *temp = head->right;
+//             delete head;
+//             return temp;
+//         }
+//         else if(head->right == NULL)
+//         {
+//             Node *temp = head->left;
+//             delete head;
+//             return temp;
+//         }
+//         else
+//         {
+//             Node *curr = getsucess(head);
+//             head->data = curr->data;
+//             head->right = del(head->right, val);
+//         }
+//     }
+//     return head;
+// }
+// void displayPre(Node *head)
+// {
+//     if(head == NULL)
+//         return;
     
-    stack <Node*> s;
-    s.push(head);
+//     stack <Node*> s;
+//     s.push(head);
 
-    while(!s.empty())
-    {
-        auto temp = s.top();
+//     while(!s.empty())
+//     {
+//         auto temp = s.top();
 
-        cout << temp->data << ", ";
-        s.pop();
+//         cout << temp->data << ", ";
+//         s.pop();
 
-        if(temp->right != NULL)
-        {
-            s.push(temp->right);
-        }
-        if(temp->left != NULL)
-        {
-            s.push(temp->left);
-        } 
-    }
-    // return head;
-}
+//         if(temp->right != NULL)
+//         {
+//             s.push(temp->right);
+//         }
+//         if(temp->left != NULL)
+//         {
+//             s.push(temp->left);
+//         } 
+//     }
+//     // return head;
+// }
 
 void display(Node *head)
 {
@@ -145,10 +221,10 @@ int main()
     head = insert(head, 40);
     head = insert(head, 60);
     head = insert(head, 80);
-    display(head);
-    cout << endl;
-    head = del(head, 20);
+    // display(head);
+    // cout << endl;
+    // head = del(head, 20);
     head = del(head, 50);
-    displayPre(head);
+    inorder(head);
     return 0;
 }
